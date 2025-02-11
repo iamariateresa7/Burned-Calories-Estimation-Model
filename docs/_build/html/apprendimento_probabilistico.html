@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>apprendimento_probabilistico package &mdash; Burned Calories Estimation Model 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apprendimento_supervisionato package" href="apprendimento_supervisionato.html" />
+    <link rel="prev" title="Burned Calories Estimation Model" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Burned Calories Estimation Model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Burned Calories Estimation Model</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">apprendimento_probabilistico package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apprendimento_probabilistico.training">apprendimento_probabilistico.training module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.evaluate_model"><code class="docutils literal notranslate"><span class="pre">evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.plot_errors"><code class="docutils literal notranslate"><span class="pre">plot_errors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.plot_metrics"><code class="docutils literal notranslate"><span class="pre">plot_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.plot_prediction_trend"><code class="docutils literal notranslate"><span class="pre">plot_prediction_trend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.plot_predictions"><code class="docutils literal notranslate"><span class="pre">plot_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.prepare_data"><code class="docutils literal notranslate"><span class="pre">prepare_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.save_results"><code class="docutils literal notranslate"><span class="pre">save_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.standardize_features"><code class="docutils literal notranslate"><span class="pre">standardize_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.train_bayesian_ridge"><code class="docutils literal notranslate"><span class="pre">train_bayesian_ridge()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apprendimento_probabilistico">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_supervisionato.html">apprendimento_supervisionato package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html">dataset package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kb.html">kb package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="predict_models.html">predict_models module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Burned Calories Estimation Model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Burned Calories Estimation Model</a></li>
+      <li class="breadcrumb-item active">apprendimento_probabilistico package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/apprendimento_probabilistico.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="apprendimento-probabilistico-package">
+<h1>apprendimento_probabilistico package<a class="headerlink" href="#apprendimento-probabilistico-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-apprendimento_probabilistico.training">
+<span id="apprendimento-probabilistico-training-module"></span><h2>apprendimento_probabilistico.training module<a class="headerlink" href="#module-apprendimento_probabilistico.training" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.evaluate_model">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">evaluate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.evaluate_model" title="Link to this definition"></a></dt>
+<dd><p>Valuta le performance del modello addestrato utilizzando diverse metriche 
+come MAE, RMSE e R^2 sia sul training set che sul test set.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>model (BayesianRidge): Il modello addestrato.
+X_train (ndarray): Il training set delle variabili indipendenti.
+X_test (ndarray): Il test set delle variabili indipendenti.
+y_train (Series): Il training set della variabile dipendente.
+y_test (Series): Il test set della variabile dipendente.</p>
+</dd>
+<dt>Returns:</dt><dd><p>metrics (dict): Un dizionario contenente le metriche per il training e il test set.
+y_test_pred (ndarray): Le predizioni sui dati di test.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.main">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.main" title="Link to this definition"></a></dt>
+<dd><p>Funzione principale che esegue tutte le operazioni:
+1. Crea le cartelle necessarie.
+2. Carica e prepara i dati.
+3. Addestra il modello.
+4. Valuta e visualizza i risultati.
+5. Salva il modello e i risultati.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.plot_errors">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">plot_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#plot_errors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.plot_errors" title="Link to this definition"></a></dt>
+<dd><p>Crea un grafico a istogramma che mostra la distribuzione degli errori 
+tra i valori reali e le predizioni.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>y_test (Series): I valori reali di test.
+y_pred (ndarray): Le predizioni del modello sui dati di test.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.plot_metrics">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">plot_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#plot_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.plot_metrics" title="Link to this definition"></a></dt>
+<dd><p>Crea un grafico a barre delle metriche di valutazione (MAE, RMSE, R^2) per 
+il training e il test set.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>metrics (dict): Le metriche di valutazione ottenute durante la fase di valutazione.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.plot_prediction_trend">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">plot_prediction_trend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#plot_prediction_trend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.plot_prediction_trend" title="Link to this definition"></a></dt>
+<dd><p>Crea un grafico che mostra l’andamento nel tempo delle predizioni 
+rispetto ai valori reali, permettendo di osservare le tendenze.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>y_test (Series): I valori reali di test.
+y_pred (ndarray): Le predizioni del modello sui dati di test.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.plot_predictions">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">plot_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#plot_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.plot_predictions" title="Link to this definition"></a></dt>
+<dd><p>Crea un grafico di dispersione che mostra le predizioni rispetto ai valori reali 
+del test set, evidenziando il confronto tra le due.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>y_test (Series): I valori reali di test.
+y_pred (ndarray): Le predizioni del modello sui dati di test.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.prepare_data">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.prepare_data" title="Link to this definition"></a></dt>
+<dd><p>Prepara i dati per l’addestramento, dividendo il dataset in variabili 
+indipendenti (X) e variabile dipendente (y), e separando il training set 
+dal test set.</p>
+<dl class="simple">
+<dt>Parameters::</dt><dd><p>df (DataFrame): Il dataset contenente i dati.</p>
+</dd>
+<dt>Returns:</dt><dd><p>X_train (DataFrame): Le variabili indipendenti per il training set.
+X_test (DataFrame): Le variabili indipendenti per il test set.
+y_train (Series): La variabile dipendente per il training set.
+y_test (Series): La variabile dipendente per il test set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.save_results">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">save_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_search_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#save_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.save_results" title="Link to this definition"></a></dt>
+<dd><p>Salva il modello addestrato, lo scaler e i migliori parametri trovati 
+durante la grid search su file.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>model (BayesianRidge): Il modello addestrato.
+scaler (StandardScaler): Lo scaler usato per standardizzare i dati.
+best_params (dict): I migliori parametri trovati tramite GridSearch.
+grid_search_results (dict): I risultati completi della ricerca a griglia.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.setup_directories">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">setup_directories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#setup_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.setup_directories" title="Link to this definition"></a></dt>
+<dd><p>Crea le cartelle necessarie per il salvataggio dei risultati del modello,
+dei grafici e degli iperparametri ottimizzati.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.standardize_features">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">standardize_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#standardize_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.standardize_features" title="Link to this definition"></a></dt>
+<dd><p>Standardizza le feature utilizzando lo StandardScaler di Scikit-learn, 
+in modo che i dati abbiano media 0 e deviazione standard 1.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>X_train (DataFrame): Il training set delle variabili indipendenti.
+X_test (DataFrame): Il test set delle variabili indipendenti.</p>
+</dd>
+<dt>Returns:</dt><dd><p>X_train_scaled (ndarray): Il training set standardizzato.
+X_test_scaled (ndarray): Il test set standardizzato.
+scaler (StandardScaler): L’oggetto scaler che è stato adattato ai dati di training.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.train_bayesian_ridge">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">train_bayesian_ridge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#train_bayesian_ridge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.train_bayesian_ridge" title="Link to this definition"></a></dt>
+<dd><p>Addestra un modello Bayesian Ridge utilizzando GridSearchCV per trovare 
+i migliori iperparametri.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>X_train (ndarray): Il training set delle variabili indipendenti.
+y_train (Series): Il training set della variabile dipendente.</p>
+</dd>
+<dt>Returns:</dt><dd><p>best_model (BayesianRidge): Il modello addestrato con i migliori parametri.
+best_params (dict): I migliori parametri trovati tramite GridSearch.
+grid_search_results (dict): I risultati completi della ricerca a griglia.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-apprendimento_probabilistico">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apprendimento_probabilistico" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Burned Calories Estimation Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="apprendimento_supervisionato.html" class="btn btn-neutral float-right" title="apprendimento_supervisionato package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Di Chio Maria Teresa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

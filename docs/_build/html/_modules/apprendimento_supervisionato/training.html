@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>apprendimento_supervisionato.training &mdash; Burned Calories Estimation Model 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Burned Calories Estimation Model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Burned Calories Estimation Model</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Burned Calories Estimation Model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">apprendimento_supervisionato.training</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for apprendimento_supervisionato.training</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+
+<span class="n">current_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">current_file_path</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_file_path</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">)))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataset.dataset_utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="setup_directories">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.setup_directories">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_directories</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crea le cartelle necessarie per il salvataggio dei modelli, grafici e risultati.</span>
+<span class="sd">    </span>
+<span class="sd">    Crea le seguenti cartelle:</span>
+<span class="sd">    - &#39;modelli&#39;: per salvare i modelli addestrati.</span>
+<span class="sd">    - &#39;grafici&#39;: per salvare i grafici delle metriche.</span>
+<span class="sd">    - &#39;iperparametri/tabelle&#39;: per salvare i risultati della ricerca sugli iperparametri.</span>
+<span class="sd">    - &#39;iperparametri/migliori&#39;: per salvare i migliori iperparametri.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;modelli&#39;</span><span class="p">,</span> <span class="s1">&#39;grafici&#39;</span><span class="p">,</span> <span class="s1">&#39;iperparametri/tabelle&#39;</span><span class="p">,</span> <span class="s1">&#39;iperparametri/migliori&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="prepare_data">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.prepare_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepara i dati per l&#39;addestramento e il test dei modelli.</span>
+<span class="sd">    </span>
+<span class="sd">    Parametri:</span>
+<span class="sd">    - df (DataFrame): il dataset da preparare.</span>
+<span class="sd">    </span>
+<span class="sd">    Restituisce:</span>
+<span class="sd">    - X_train (DataFrame): le feature del training set.</span>
+<span class="sd">    - X_test (DataFrame): le feature del test set.</span>
+<span class="sd">    - y_train (Series): il target del training set.</span>
+<span class="sd">    - y_test (Series): il target del test set.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Workout_Type&#39;</span><span class="p">,</span> <span class="s1">&#39;Session_Duration_(hours)&#39;</span><span class="p">,</span> <span class="s1">&#39;Weight_(kg)&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg_BPM&#39;</span><span class="p">]]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Calories_Burned&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="train_linear_regression">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.train_linear_regression">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_linear_regression</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Addestra un modello di regressione lineare.</span>
+<span class="sd">    </span>
+<span class="sd">    Parametri:</span>
+<span class="sd">    - X_train (DataFrame): le feature del training set.</span>
+<span class="sd">    - y_train (Series): il target del training set.</span>
+<span class="sd">    </span>
+<span class="sd">    Restituisce:</span>
+<span class="sd">    - model (LinearRegression): il modello addestrato.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="train_model_with_grid_search">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.train_model_with_grid_search">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_model_with_grid_search</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esegue una ricerca sugli iperparametri (Grid Search) per addestrare un modello.</span>
+<span class="sd">    </span>
+<span class="sd">    Parametri:</span>
+<span class="sd">    - model_class (class): la classe del modello da addestrare (e.g., RandomForestRegressor).</span>
+<span class="sd">    - param_grid (dict): la griglia di ricerca per gli iperparametri.</span>
+<span class="sd">    - X_train (DataFrame): le feature del training set.</span>
+<span class="sd">    - y_train (Series): il target del training set.</span>
+<span class="sd">    </span>
+<span class="sd">    Restituisce:</span>
+<span class="sd">    - best_model (model): il miglior modello addestrato.</span>
+<span class="sd">    - best_params (dict): i migliori parametri trovati dal grid search.</span>
+<span class="sd">    - cv_results (dict): i risultati della ricerca sugli iperparametri.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model_class</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_mean_absolute_error&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">best_params</span> <span class="o">=</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">best_params_</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Migliori parametri trovati per </span><span class="si">{</span><span class="n">model_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">best_params</span><span class="p">)</span>
+    <span class="n">best_model</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">(</span><span class="o">**</span><span class="n">best_params</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">best_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">best_model</span><span class="p">,</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">cv_results_</span></div>
+
+
+<div class="viewcode-block" id="get_hyperparameters">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.get_hyperparameters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_hyperparameters</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Definisce i parametri per la ricerca sugli iperparametri per Random Forest e Gradient Boosting.</span>
+<span class="sd">    </span>
+<span class="sd">    Restituisce:</span>
+<span class="sd">    - dict: la griglia di ricerca per ogni modello.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span>
+            <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+            <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+            <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+            <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;bootstrap&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;gradient_boosting&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span>
+            <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+            <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+            <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+            <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="evaluate_models">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.evaluate_models">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esegue la valutazione dei modelli usando MAE e RMSE su set di training e test.</span>
+<span class="sd">    </span>
+<span class="sd">    Parametri:</span>
+<span class="sd">    - models (dict): i modelli da valutare.</span>
+<span class="sd">    - X_test (DataFrame): le feature del test set.</span>
+<span class="sd">    - y_test (Series): il target del test set.</span>
+<span class="sd">    - X_train (DataFrame): le feature del training set.</span>
+<span class="sd">    - y_train (Series): il target del training set.</span>
+<span class="sd">    </span>
+<span class="sd">    Restituisce:</span>
+<span class="sd">    - metrics (dict): un dizionario contenente le metriche per ogni modello sui set di training e test.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">y_pred_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="n">y_pred_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+        
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Modello&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">),</span>
+            <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">))</span>
+        <span class="p">})</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Modello&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_pred_train</span><span class="p">),</span>
+            <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_pred_train</span><span class="p">))</span>
+        <span class="p">})</span>
+    <span class="k">return</span> <span class="n">metrics</span></div>
+
+
+<div class="viewcode-block" id="plot_metrics">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.plot_metrics">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crea e salva un grafico delle metriche di errore (MAE e RMSE) per ogni modello.</span>
+<span class="sd">    </span>
+<span class="sd">    Parametri:</span>
+<span class="sd">    - metrics (dict): le metriche da tracciare (contenente &#39;MAE&#39; e &#39;RMSE&#39; per ogni modello).</span>
+<span class="sd">    - title (str): il titolo del grafico.</span>
+<span class="sd">    - filename (str): il percorso dove salvare il grafico.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.35</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_metrics</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">bar_width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">df_metrics</span><span class="p">[</span><span class="s1">&#39;MAE&#39;</span><span class="p">],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MAE&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">bar_width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">df_metrics</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Errore&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df_metrics</span><span class="p">[</span><span class="s1">&#39;Modello&#39;</span><span class="p">],</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="save_results">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_results</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Salva i modelli addestrati, i migliori iperparametri e i risultati della grid search.</span>
+<span class="sd">    </span>
+<span class="sd">    Parametri:</span>
+<span class="sd">    - models (dict): i modelli addestrati.</span>
+<span class="sd">    - best_params (dict): i migliori parametri per ogni modello.</span>
+<span class="sd">    - results (dict): i risultati della grid search per ogni modello.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;modelli/modello_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.pkl&#39;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">best_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;iperparametri/migliori/iperparametri_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">json_file</span><span class="p">)</span>
+        
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;iperparametri/tabelle/iperparametri_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Funzione principale che esegue il flusso completo del processo di addestramento e valutazione del modello.</span>
+<span class="sd">    </span>
+<span class="sd">    1. Imposta le directory necessarie.</span>
+<span class="sd">    2. Carica e prepara il dataset.</span>
+<span class="sd">    3. Esegue il training dei modelli.</span>
+<span class="sd">    4. Valuta le performance dei modelli sui set di training e test.</span>
+<span class="sd">    5. Crea i grafici delle metriche di errore.</span>
+<span class="sd">    6. Salva i modelli, i migliori iperparametri e i risultati.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">setup_directories</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_and_prepare_data</span><span class="p">(</span><span class="s2">&quot;../dataset/gym_members_exercise_tracking.csv&quot;</span><span class="p">)</span>
+    <span class="c1"># rimuovi la directory principale dal path</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">prepare_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">standardize_features</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+
+    <span class="n">linear_model</span> <span class="o">=</span> <span class="n">train_linear_regression</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">hyperparams</span> <span class="o">=</span> <span class="n">get_hyperparameters</span><span class="p">()</span>
+
+    <span class="n">rf_model</span><span class="p">,</span> <span class="n">rf_params</span><span class="p">,</span> <span class="n">rf_results</span> <span class="o">=</span> <span class="n">train_model_with_grid_search</span><span class="p">(</span><span class="n">RandomForestRegressor</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;random_forest&#39;</span><span class="p">],</span> <span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">gb_model</span><span class="p">,</span> <span class="n">gb_params</span><span class="p">,</span> <span class="n">gb_results</span> <span class="o">=</span> <span class="n">train_model_with_grid_search</span><span class="p">(</span><span class="n">GradientBoostingRegressor</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;gradient_boosting&#39;</span><span class="p">],</span> <span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">models</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Linear Regression&#39;</span><span class="p">:</span> <span class="n">linear_model</span><span class="p">,</span> <span class="s1">&#39;Random Forest&#39;</span><span class="p">:</span> <span class="n">rf_model</span><span class="p">,</span> <span class="s1">&#39;Gradient Boosting&#39;</span><span class="p">:</span> <span class="n">gb_model</span><span class="p">}</span>
+    <span class="n">best_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="n">rf_params</span><span class="p">,</span> <span class="s1">&#39;gradient_boosting&#39;</span><span class="p">:</span> <span class="n">gb_params</span><span class="p">}</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="n">rf_results</span><span class="p">,</span> <span class="s1">&#39;gradient_boosting&#39;</span><span class="p">:</span> <span class="n">gb_results</span><span class="p">}</span>
+
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">plot_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="s2">&quot;Performance sui dati di test&quot;</span><span class="p">,</span> <span class="s2">&quot;grafici/test_set_metriche.png&quot;</span><span class="p">)</span>
+    <span class="n">plot_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">],</span> <span class="s2">&quot;Performance sui dati di training&quot;</span><span class="p">,</span> <span class="s2">&quot;grafici/training_set_metriche.png&quot;</span><span class="p">)</span>
+
+    <span class="n">save_results</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modelli addestrati e salvati con successo!&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Di Chio Maria Teresa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

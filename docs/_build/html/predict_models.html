@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>predict_models module &mdash; Burned Calories Estimation Model 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="kb package" href="kb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Burned Calories Estimation Model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Burned Calories Estimation Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_probabilistico.html">apprendimento_probabilistico package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_supervisionato.html">apprendimento_supervisionato package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html">dataset package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kb.html">kb package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">predict_models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.get_user_input"><code class="docutils literal notranslate"><span class="pre">get_user_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.load_models"><code class="docutils literal notranslate"><span class="pre">load_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.make_predictions"><code class="docutils literal notranslate"><span class="pre">make_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.print_predictions"><code class="docutils literal notranslate"><span class="pre">print_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.print_prolog_results"><code class="docutils literal notranslate"><span class="pre">print_prolog_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.query_prolog"><code class="docutils literal notranslate"><span class="pre">query_prolog()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predict_models.scale_data"><code class="docutils literal notranslate"><span class="pre">scale_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Burned Calories Estimation Model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Burned Calories Estimation Model</a></li>
+      <li class="breadcrumb-item active">predict_models module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/predict_models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-predict_models">
+<span id="predict-models-module"></span><h1>predict_models module<a class="headerlink" href="#module-predict_models" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.get_user_input">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">get_user_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workout_mapping</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#get_user_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.get_user_input" title="Link to this definition"></a></dt>
+<dd><p>Richiede all’utente di inserire i dati necessari per l’elaborazione delle predizioni.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>workout_mapping (dict): una mappatura dei tipi di allenamento.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: una tupla contenente i dati inseriti dall’utente (genere, età, peso, altezza, battiti medi, tipo di allenamento e durata della sessione).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.load_models">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">load_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#load_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.load_models" title="Link to this definition"></a></dt>
+<dd><p>Carica i modelli di machine learning e lo scaler da file salvati.</p>
+<p>Questa funzione carica i modelli di regressione (Linear Regression, Random Forest, Gradient Boosting, Bayesian Ridge)
+e lo scaler, utilizzati per normalizzare i dati in ingresso. Inoltre, carica una mappatura dei workout.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>dict: un dizionario contenente i modelli caricati.
+scaler: lo scaler per la normalizzazione dei dati.
+workout_mapping: una mappatura dei tipi di allenamento.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.main">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.main" title="Link to this definition"></a></dt>
+<dd><p>Funzione principale che gestisce il flusso di lavoro dell’applicazione.</p>
+<ol class="arabic simple">
+<li><p>Carica i modelli, lo scaler e la mappatura degli allenamenti.</p></li>
+<li><p>Raccoglie i dati dell’utente.</p></li>
+<li><p>Interroga la base di conoscenza Prolog per inferire il tipo di allenamento, l’intensità e la durata ottimale.</p></li>
+<li><p>Scala i dati dell’utente.</p></li>
+<li><p>Effettua le predizioni utilizzando i modelli di machine learning.</p></li>
+<li><p>Stampa i risultati delle predizioni.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.make_predictions">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">make_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#make_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.make_predictions" title="Link to this definition"></a></dt>
+<dd><p>Effettua le predizioni sui dati scalati utilizzando i vari modelli di machine learning.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>models (dict): i modelli di machine learning da utilizzare.
+scaled_data (DataFrame): i dati scalati sui quali fare le predizioni.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: un dizionario con le predizioni per ogni modello e per l’intervallo di confidenza del modello Bayesian Ridge.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.print_predictions">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">print_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#print_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.print_predictions" title="Link to this definition"></a></dt>
+<dd><p>Stampa i risultati delle predizioni effettuate.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>predictions (dict): un dizionario contenente le predizioni per ogni modello.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.print_prolog_results">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">print_prolog_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workout_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workout_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimal_duration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#print_prolog_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.print_prolog_results" title="Link to this definition"></a></dt>
+<dd><p>Stampa i risultati dell’inferenza fatta dalla base di conoscenza Prolog.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>workout_mapping (dict): una mappatura dei tipi di allenamento.
+workout_type (int): il tipo di allenamento raccomandato.
+intensity (str): il livello di intensità raccomandato.
+optimal_duration (float): la durata ottimale dell’allenamento.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.query_prolog">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">query_prolog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#query_prolog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.query_prolog" title="Link to this definition"></a></dt>
+<dd><p>Interroga la base di conoscenza Prolog per inferire il tipo di allenamento,
+l’intensità e la durata ottimale in base ai parametri di input.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>weight (float): il peso dell’utente (in kg).
+height (float): l’altezza dell’utente (in metri).
+duration (float): la durata della sessione di allenamento (in ore).</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: una tupla contenente il tipo di allenamento, l’intensità e la durata ottimale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="predict_models.scale_data">
+<span class="sig-prename descclassname"><span class="pre">predict_models.</span></span><span class="sig-name descname"><span class="pre">scale_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict_models.html#scale_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#predict_models.scale_data" title="Link to this definition"></a></dt>
+<dd><p>Scala i dati forniti utilizzando lo scaler fornito.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>data (DataFrame): i dati da scalare.
+scaler (Scaler): lo scaler da utilizzare per la normalizzazione.</p>
+</dd>
+<dt>Returns:</dt><dd><p>DataFrame: i dati scalati.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kb.html" class="btn btn-neutral float-left" title="kb package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Di Chio Maria Teresa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
