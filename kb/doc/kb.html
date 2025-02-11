@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>kb.pl -- Knowledge Base per Calorie e Fitness</title>
+
+<link rel="stylesheet" type="text/css" href="pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>kb.pl -- Knowledge Base per Calorie e Fitness</h1>
+
+<p>
+Questo modulo fornisce regole per stimare le calorie bruciate,
+calcolare il BMI, classificare il livello di fitness e
+suggerire allenamenti basati su peso e altezza.</p>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="calories_per_kg/2"><b class="pred">calories_per_kg</b><var class="arglist">(+Workout_Type, -CaloriesPerKg)</var></a></dt><dd class="defbody">Determina il consumo calorico per kg all'ora in base al tipo di allenamento.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Workout_Type</var></td><td class="argdescr">- Tipo di allenamento (0: Cardio, 1: HIIT, 2: Strength Training, 3: Yoga)</td></tr>
+<tr><td><var>CaloriesPerKg</var></td><td class="argdescr">- Calorie bruciate per kg per ora</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="calories_burned/4"><b class="pred">calories_burned</b><var class="arglist">(+Workout_Type, +Duration, +Weight, -Calories)</var></a></dt><dd class="defbody">Stima le calorie bruciate in base al tipo di allenamento, durata e peso corporeo.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Workout_Type</var></td><td class="argdescr">- Tipo di allenamento</td></tr>
+<tr><td><var>Duration</var></td><td class="argdescr">- Durata dell'allenamento (ore)</td></tr>
+<tr><td><var>Weight</var></td><td class="argdescr">- Peso corporeo (kg)</td></tr>
+<tr><td><var>Calories</var></td><td class="argdescr">- Calorie bruciate stimate</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="bmi/3"><b class="pred">bmi</b><var class="arglist">(+Weight, +Height, -BMI)</var></a></dt><dd class="defbody">Calcola il <var>BMI</var> (Body Mass Index).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Weight</var></td><td class="argdescr">- Peso corporeo (kg)</td></tr>
+<tr><td><var>Height</var></td><td class="argdescr">- Altezza (m)</td></tr>
+<tr><td><var>BMI</var></td><td class="argdescr">- Indice di massa corporea calcolato</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="fitness_level/2"><b class="pred">fitness_level</b><var class="arglist">(+BMI, -Level)</var></a></dt><dd class="defbody">Classifica il livello di fitness in base al <var>BMI</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>BMI</var></td><td class="argdescr">- Indice di massa corporea</td></tr>
+<tr><td><var>Level</var></td><td class="argdescr">- Categoria di fitness (underweight, normal, overweight, obese)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="workout_type/2"><b class="pred">workout_type</b><var class="arglist">(+FitnessLevel, -Workout_Type)</var></a></dt><dd class="defbody">Associa il livello di fitness con il tipo di allenamento consigliato.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>FitnessLevel</var></td><td class="argdescr">- Livello di fitness (underweight, normal, overweight, obese)</td></tr>
+<tr><td><var>Workout_Type</var></td><td class="argdescr">- Tipo di allenamento consigliato</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="recommended_workout/3"><b class="pred">recommended_workout</b><var class="arglist">(+Weight, +Height, -Workout_Type)</var></a></dt><dd class="defbody">Determina il tipo di allenamento consigliato in base al peso e all'altezza.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Weight</var></td><td class="argdescr">- Peso corporeo (kg)</td></tr>
+<tr><td><var>Height</var></td><td class="argdescr">- Altezza (m)</td></tr>
+<tr><td><var>Workout_Type</var></td><td class="argdescr">- Tipo di allenamento consigliato</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="intensity_threshold/2"><b class="pred">intensity_threshold</b><var class="arglist">(+IntensitÃ, -Soglia)</var></a></dt><dd class="defbody">Definisce le soglie di calorie bruciate per determinare il livello di intensitÃ dell'allenamento.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>IntensitÃ</var></td><td class="argdescr">- Livello di intensitÃ dell'allenamento (high, moderate)</td></tr>
+<tr><td><var>Soglia</var></td><td class="argdescr">- Numero minimo di calorie bruciate per rientrare in tale livello di intensitÃ </td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="intensity_category/2"><b class="pred">intensity_category</b><var class="arglist">(+Calories, -Intensity)</var></a></dt><dd class="defbody">Classifica l'intensitÃ dell'allenamento in base alle calorie bruciate.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Calories</var></td><td class="argdescr">- Calorie bruciate</td></tr>
+<tr><td><var>Intensity</var></td><td class="argdescr">- IntensitÃ dell'allenamento (low, moderate, high)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="recommended_intensity/4"><b class="pred">recommended_intensity</b><var class="arglist">(+Weight, +Height, -Intensity, +Duration)</var></a></dt><dd class="defbody">Determina l'intensitÃ dell'allenamento raccomandato basata su peso, altezza e durata.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Weight</var></td><td class="argdescr">- Peso corporeo (kg)</td></tr>
+<tr><td><var>Height</var></td><td class="argdescr">- Altezza (m)</td></tr>
+<tr><td><var>Intensity</var></td><td class="argdescr">- IntensitÃ consigliata (low, moderate, high)</td></tr>
+<tr><td><var>Duration</var></td><td class="argdescr">- Durata dell'allenamento (ore)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="suggested_duration/2"><b class="pred">suggested_duration</b><var class="arglist">(+IntensitÃ, -Durata)</var></a></dt><dd class="defbody">Determina la durata consigliata di un allenamento in base alla sua intensitÃ .
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>IntensitÃ</var></td><td class="argdescr">- Livello di intensitÃ dell'allenamento (high, moderate, low)</td></tr>
+<tr><td><var>Durata</var></td><td class="argdescr">- <var>Durata</var> consigliata dell'allenamento in ore</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="adjust_duration/3"><b class="pred">adjust_duration</b><var class="arglist">(+Intensity, +BaseDuration, -FinalDuration)</var></a></dt><dd class="defbody">Regola la durata dell'allenamento in base all'intensitÃ .
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Intensity</var></td><td class="argdescr">- IntensitÃ dell'allenamento (low, moderate, high)</td></tr>
+<tr><td><var>BaseDuration</var></td><td class="argdescr">- Durata iniziale (ore)</td></tr>
+<tr><td><var>FinalDuration</var></td><td class="argdescr">- Durata finale consigliata (ore)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="optimal_duration/4"><b class="pred">optimal_duration</b><var class="arglist">(+Weight, +Height, +Duration, -OptimalDuration)</var></a></dt><dd class="defbody">Calcola la durata ottimale dell'allenamento basata su intensitÃ e durata iniziale.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Weight</var></td><td class="argdescr">- Peso corporeo (kg)</td></tr>
+<tr><td><var>Height</var></td><td class="argdescr">- Altezza (m)</td></tr>
+<tr><td><var>Duration</var></td><td class="argdescr">- Durata iniziale dell'allenamento (ore)</td></tr>
+<tr><td><var>OptimalDuration</var></td><td class="argdescr">- Durata ottimale consigliata (ore)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>
